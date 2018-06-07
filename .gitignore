@@ -1,0 +1,14 @@
+# Directories
+/.cache
+/auto-save-list
+/bin
+/project-explorer-cache
+/server
+
+# Files
+abbrev_defs
+indium-workspaces.el
+projectile.cache
+projectile-bookmarks.eld
+recentf
+tramp
