@@ -1,4 +1,4 @@
-# A Emacs configuration file
+# An Emacs configuration file
 
 Extends mainly default support for these languages :
 * Javascript
