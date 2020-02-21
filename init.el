@@ -220,7 +220,8 @@
   :init (elpy-enable)
   :config
   (setq elpy-test-runner 'elpy-test-django-runner)
-  ;; (setq elpy-test-django-runner-command '("./manage.py" "test"))
+  (setq elpy-django-command "./manage.py")
+  (setenv "DJANGO_SETTINGS_MODULE" "doqboard.settings.dev")
   (setq elpy-rpc-python-command "python3")
   (setq python-shell-interpreter "python3"
         python-shell-interpreter-args "-i")
