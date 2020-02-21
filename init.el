@@ -46,6 +46,9 @@
     (add-to-list 'package-archives '("gnu" . (concat proto "://elpa.gnu.org/packages/")))))
 (package-initialize)
 
+;; Try to uncomment next line if a package download fails
+;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
 ;;--------------------------------------------------------------------------------------------------
 ;; WIN conf
 ;;--------------------------------------------------------------------------------------------------
@@ -430,10 +433,6 @@
 ;;--------------------------------------------------------------------------------------------------
 ;; LATEX
 ;;--------------------------------------------------------------------------------------------------
-
-;; Try to uncomment next line if auctex installation failed
-;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
-
 (use-package tex
   :ensure auctex)
 
