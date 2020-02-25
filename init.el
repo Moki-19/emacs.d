@@ -46,7 +46,7 @@
     (add-to-list 'package-archives '("gnu" . (concat proto "://elpa.gnu.org/packages/")))))
 (package-initialize)
 
-;; Try to uncomment next line if a package download fails
+;; Try to uncomment next line if a package download fails (probably not longer needed with Emacs >= 26.3)
 ;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 ;;--------------------------------------------------------------------------------------------------
@@ -462,7 +462,6 @@
   :mode (("\\.rstclt\\'" . restclient-mode))
   :config
   (setq restclient-same-buffer-response-name "*restclient HTTP response*")
-  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3");; Fix : https://github.com/pashky/restclient.el/issues/212
   (defvar api-restclient-token nil)
   ;;(add-to-list 'restclient-content-type-modes '("application/json" . json-mode))
   (defun api-restclient-hook ()
