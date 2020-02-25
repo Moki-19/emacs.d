@@ -892,7 +892,9 @@ to REPO and COMPILE-APP-COMMAND arguments"
   :config
   (dashboard-setup-startup-hook)
   (setq dashboard-items '((recents  . 15)
-                          (projects . 5))))
+                          (projects . 5)
+                          (agenda . 15)))
+  (setq show-week-agenda-p t))
 
 ;;--------------------------------------------------------------------------------------------------
 ;; AG
@@ -1089,6 +1091,7 @@ to REPO and COMPILE-APP-COMMAND arguments"
   :bind (("C-c o w" . open-current-work-notes)
          ("C-c o W" . open-previous-work-notes)
          ("C-c o t l" . org-todo-list)
+         ("C-c o c l" . org-agenda-show-custom)
          ("C-c <left>" . org-metaleft)
          ("C-c <right>" . org-metaright)
          ("C-c o e s" . org-slack-export-to-clipboard-as-slack)
@@ -1098,7 +1101,14 @@ to REPO and COMPILE-APP-COMMAND arguments"
   (setq org-startup-folded nil)
   (setq org-agenda-files (list org-work-notes-path))
   (setq org-todo-keywords
-  '((sequence "TODO" "SUSPENDED" "|" "DONE" "CANCELLED")))
+        '((sequence "TODO" "SUSPENDED" "|" "DONE" "CANCELLED")))
+  (setq org-agenda-custom-commands
+        '(("c" "Custom agenda view"
+           ((agenda "")
+            (alltodo "")))))
+  (defun org-agenda-show-custom (&optional arg)
+    (interactive "P")
+    (org-agenda arg "c"))
 
   (add-hook 'org-mode-hook (lambda () (setq fill-column 100)))
 
@@ -1192,6 +1202,9 @@ to REPO and COMPILE-APP-COMMAND arguments"
    (quote
     ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "b3775ba758e7d31f3bb849e7c9e48ff60929a792961a2d536edec8f68c671ca5" "3cc2385c39257fed66238921602d8104d8fd6266ad88a006d0a4325336f5ee02" default)))
  '(gdb-create-source-file-list nil)
+ '(org-agenda-files
+   (quote
+    ("/Users/llemaitre/Travail/Docs/org-work-notes/2020.org" "/Users/llemaitre/Travail/Docs/org-work-notes/2019.org" "/Users/llemaitre/Travail/Docs/org-work-notes/conges.org")))
  '(package-selected-packages
    (quote
     (company-auctex auctex telephone-line powerline smart-mode-line ws-butler kurecolor flycheck-css-colorguard rainbow-mode js2-refactor js2-mode org po-mode realgud-ipdb markdown-mode jest json-navigator realgud multi-term restclient indium dashboard rjsx-mode build-helper elpy diminish ibuffer-projectile ivy-yasnippet yasnippet highlight-indentation birds-of-paradise-plus-theme php-mode counsel-gtags counsel-projectile counsel all-the-icons-ivy google-translate web-mode powershell ggtags init-open-recentf treemacs-projectile treemacs magit tide string-inflection flycheck all-the-icons-dired use-package company-web add-node-modules-path geben yasnippet-snippets projectile yascroll auto-complete chess yaml-mode buffer-move zenburn-theme dracula-theme company-tern json-mode ag s exec-path-from-shell)))
