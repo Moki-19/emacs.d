@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Push automatically after each commit
+git push
