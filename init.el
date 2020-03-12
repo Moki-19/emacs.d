@@ -216,7 +216,8 @@
 ;;--------------------------------------------------------------------------------------------------
 (use-package elpy
   :ensure t
-  :bind (:map python-mode-map ("C-c ! f" . elpy-autopep8-fix-code))
+  :bind ((:map python-mode-map ("C-c ! f" . elpy-autopep8-fix-code))
+         (:map compilation-mode-map ("C-c C-p" . compile-to-inferior-python)))
   :init (elpy-enable)
   :config
   (setq elpy-test-runner 'elpy-test-django-runner)
@@ -225,19 +226,33 @@
   (setq elpy-rpc-python-command "python3")
   (setq python-shell-interpreter "python3"
         python-shell-interpreter-args "-i")
+
   ;; Use Flycheck instead of Flymake
   (when (require 'flycheck nil t)
     (remove-hook 'elpy-modules 'elpy-module-flymake)
     (add-hook 'elpy-mode-hook 'flycheck-mode))
+
   ;; Customize pdb command for Django
   (setq gud-pdb-command-name "python -m pdb")
+
   ;; Fix some keys conflicts
   (define-key elpy-mode-map (kbd "<C-down>") nil)
   (define-key elpy-mode-map (kbd "<C-up>") nil)
   (define-key elpy-mode-map (kbd "<M-down>") nil)
   (define-key elpy-mode-map (kbd "<M-up>") nil)
   (define-key elpy-mode-map (kbd "<M-left>") nil)
-  (define-key elpy-mode-map (kbd "<M-right>") nil))
+  (define-key elpy-mode-map (kbd "<M-right>") nil)
+
+  (defun compile-to-inferior-python ()
+      "Turn a compilation buffer into Inferior Python mode"
+      (interactive)
+      (if (string= major-mode "compilation-mode")
+          (progn
+            (read-only-mode -1)
+            (let ((python-shell--interpreter nil)
+                  (python-shell--interpreter-args nil))
+              (inferior-python-mode)))
+        (message "Buffer mode needs to be compilation-mode"))))
 
 ;;--------------------------------------------------------------------------------------------------
 ;; PO-MODE
