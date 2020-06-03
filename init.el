@@ -76,8 +76,6 @@
   (load "osx_gud.el")
   (setq exec-path (append '("/usr/local/bin")
                           exec-path))
-  (setq exec-path (append '("/Users/loic/.emacs.d/bin")
-                          exec-path))
   (defvar app-rebuild "~/Travail/Scripts/rebuild_postop")
   (defvar eslint-path "node_modules/eslint/bin/eslint.js")
   (defvar jest-path "node_modules/jest/bin/jest.js")
