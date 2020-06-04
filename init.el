@@ -92,6 +92,20 @@
   (set-face-attribute 'default nil
                       :font "Iosevka"))
 
+;;--------------------------------------------------------------------------------------------------
+;; LINUX conf
+;;--------------------------------------------------------------------------------------------------
+(when (eq system-type 'gnu/linux)
+  ;; (setq exec-path (append '("/usr/local/bin")
+  ;;                         exec-path))
+  ;; (defvar app-rebuild "~/Travail/Scripts/rebuild_postop")
+  (defvar eslint-path "node_modules/eslint/bin/eslint.js")
+  (defvar jest-path "node_modules/jest/bin/jest.js")
+  ;; (defvar chrome-path "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
+  (defvar org-work-notes-path "~/Travail/Docs/org-work-notes")
+  (defvar font-height-medium-screen 110)
+  (defvar font-height-large-screen 150))
+
 
 ;;--------------------------------------------------------------------------------------------------
 ;; EXEC PATH FROM SHELL
@@ -105,12 +119,12 @@
 ;;--------------------------------------------------------------------------------------------------
 ;; FONT
 ;;--------------------------------------------------------------------------------------------------
-(set-face-attribute 'default nil :height (when (> (x-display-pixel-width) 1280)
-                                           font-height-medium-screen
-                                           font-height-large-screen))
+(set-face-attribute 'default nil :height (if (<= (x-display-pixel-width) 1280)
+					   font-height-medium-screen
+					   font-height-large-screen))
 
 ;;--------------------------------------------------------------------------------------------------
-;; DISABLE SOUND
+;; Disable SOUND
 ;;--------------------------------------------------------------------------------------------------
 (setq visible-bell 1)
 
@@ -947,34 +961,35 @@ to REPO and COMPILE-APP-COMMAND arguments"
   :init
   :config
   (projectile-global-mode)
-  (setq projectile-indexing-method 'alien)
-  (setq projectile-enable-caching t)
-  (setq projectile-completion-system 'ivy)
-  (setq projectile-mode-line-function '(lambda () (format " Prj[%s]" (projectile-project-name))))
-  (add-to-list 'projectile-other-file-alist '("json" "json"))
+;;   (setq projectile-indexing-method 'alien)
+;;   (setq projectile-enable-caching t)
+;;   (setq projectile-completion-system 'ivy)
+;;   (setq projectile-mode-line-function '(lambda () (format " Prj[%s]" (projectile-project-name))))
+;;   (add-to-list 'projectile-other-file-alist '("json" "json"))
 
-  (setq projectile-globally-ignored-directories
-        (append '("*.svn"
-                  "*.git"
-                  "ext")
-                projectile-globally-ignored-directories))
+;;   (setq projectile-globally-ignored-directories
+;;         (append '("*.svn"
+;;                   "*.git"
+;;                   "ext")
+;;                 projectile-globally-ignored-directories))
 
-  ;; Only works if index method is 'alien
-  (setq projectile-globally-ignored-file-suffixes
-        (append '(".o"
-                  ".gz"
-                  ".z"
-                  ".jar"
-                  ".tar.gz"
-                  ".tgz"
-                  ".zip"
-                  ".png"
-                  ".gif"
-                  ".odt"
-                  ".pdf"
-                  ".DS_Store"
-                  "~")
-                projectile-globally-ignored-file-suffixes))
+;;   ;; Only works if index method is 'alien
+;;   (setq projectile-globally-ignored-file-suffixes
+;;         (append '(".o"
+;;                   ".gz"
+;;                   ".z"
+;;                   ".jar"
+;;                   ".tar.gz"
+;;                   ".tgz"
+;;                   ".zip"
+;;                   ".png"
+;;                   ".gif"
+;;                   ".odt"
+;;                   ".pdf"
+;;                   ".DS_Store"
+;;                   "~")
+;;                 projectile-globally-ignored-file-suffixes))
+;; (setq exec-path (append '("/usr/local/bin")
 
   ;; (defun run-doqboard-project()
   ;;   "Run Doqboard project (frontend and backend)"
@@ -1186,8 +1201,9 @@ to REPO and COMPILE-APP-COMMAND arguments"
 (setq comint-move-point-for-output nil)
 (setq comint-scroll-show-maximum-output nil)
 (setq shell-font-lock-keywords nil)
-;; Force shell-coomand to load .bashrc
-(setq shell-command-switch "-ic")
+;; Force shell-command to load .bashrc
+(unless (eq system-type 'gnu/linux) ;; Conflicting with Projectile on Linux
+  (setq shell-command-switch "-ic"))
 
 ;;--------------------------------------------------------------------------------------------------
 ;; MISC
@@ -1216,9 +1232,7 @@ to REPO and COMPILE-APP-COMMAND arguments"
    (quote
     ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "b3775ba758e7d31f3bb849e7c9e48ff60929a792961a2d536edec8f68c671ca5" "3cc2385c39257fed66238921602d8104d8fd6266ad88a006d0a4325336f5ee02" default)))
  '(gdb-create-source-file-list nil)
- '(org-agenda-files
-   (quote
-    ("/Users/llemaitre/Travail/Docs/org-work-notes/2020.org" "/Users/llemaitre/Travail/Docs/org-work-notes/2019.org" "/Users/llemaitre/Travail/Docs/org-work-notes/conges.org")))
+ '(org-agenda-files nil)
  '(package-selected-packages
    (quote
     (company-auctex auctex telephone-line powerline smart-mode-line ws-butler kurecolor flycheck-css-colorguard rainbow-mode js2-refactor js2-mode org po-mode realgud-ipdb markdown-mode jest json-navigator realgud multi-term restclient indium dashboard rjsx-mode build-helper elpy diminish ibuffer-projectile ivy-yasnippet yasnippet highlight-indentation birds-of-paradise-plus-theme php-mode counsel-gtags counsel-projectile counsel all-the-icons-ivy google-translate web-mode powershell ggtags init-open-recentf treemacs-projectile treemacs magit tide string-inflection flycheck all-the-icons-dired use-package company-web add-node-modules-path geben yasnippet-snippets projectile yascroll auto-complete chess yaml-mode buffer-move zenburn-theme dracula-theme company-tern json-mode ag s exec-path-from-shell)))
