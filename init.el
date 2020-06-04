@@ -1047,7 +1047,8 @@ to REPO and COMPILE-APP-COMMAND arguments"
 ;;--------------------------------------------------------------------------------------------------
 ;; GLOBAL SHORTCUTS
 ;;--------------------------------------------------------------------------------------------------
-(global-set-key (kbd "<mouse-4>") 'mouse-yank-primary)
+(when (eq system-type 'darwin)
+  (global-set-key (kbd "<mouse-4>") 'mouse-yank-primary))
 (global-set-key (kbd "C-<pause>") 'previous-buffer)
 (global-set-key (kbd "M-<pause>") 'next-buffer)
 (global-set-key (kbd "C-<tab>") 'dabbrev-expand)
