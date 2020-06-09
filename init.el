@@ -961,35 +961,35 @@ to REPO and COMPILE-APP-COMMAND arguments"
   :init
   :config
   (projectile-global-mode)
-;;   (setq projectile-indexing-method 'alien)
-;;   (setq projectile-enable-caching t)
-;;   (setq projectile-completion-system 'ivy)
-;;   (setq projectile-mode-line-function '(lambda () (format " Prj[%s]" (projectile-project-name))))
-;;   (add-to-list 'projectile-other-file-alist '("json" "json"))
+  (setq projectile-indexing-method 'alien)
+  (setq projectile-enable-caching t)
+  (setq projectile-completion-system 'ivy)
+  (setq projectile-mode-line-function '(lambda () (format " Prj[%s]" (projectile-project-name))))
+  (add-to-list 'projectile-other-file-alist '("json" "json"))
 
-;;   (setq projectile-globally-ignored-directories
-;;         (append '("*.svn"
-;;                   "*.git"
-;;                   "ext")
-;;                 projectile-globally-ignored-directories))
+  (setq projectile-globally-ignored-directories
+        (append '("*.svn"
+                  "*.git"
+                  "ext")
+                projectile-globally-ignored-directories))
 
-;;   ;; Only works if index method is 'alien
-;;   (setq projectile-globally-ignored-file-suffixes
-;;         (append '(".o"
-;;                   ".gz"
-;;                   ".z"
-;;                   ".jar"
-;;                   ".tar.gz"
-;;                   ".tgz"
-;;                   ".zip"
-;;                   ".png"
-;;                   ".gif"
-;;                   ".odt"
-;;                   ".pdf"
-;;                   ".DS_Store"
-;;                   "~")
-;;                 projectile-globally-ignored-file-suffixes))
-;; (setq exec-path (append '("/usr/local/bin")
+  ;; Only works if index method is 'alien
+  (setq projectile-globally-ignored-file-suffixes
+        (append '(".o"
+                  ".gz"
+                  ".z"
+                  ".jar"
+                  ".tar.gz"
+                  ".tgz"
+                  ".zip"
+                  ".png"
+                  ".gif"
+                  ".odt"
+                  ".pdf"
+                  ".DS_Store"
+                  "~")
+                projectile-globally-ignored-file-suffixes))
+  (setq exec-path (append '("/usr/local/bin")))
 
   ;; (defun run-doqboard-project()
   ;;   "Run Doqboard project (frontend and backend)"
