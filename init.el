@@ -989,7 +989,6 @@ to REPO and COMPILE-APP-COMMAND arguments"
                   ".DS_Store"
                   "~")
                 projectile-globally-ignored-file-suffixes))
-  (setq exec-path (append '("/usr/local/bin")))
 
   ;; (defun run-doqboard-project()
   ;;   "Run Doqboard project (frontend and backend)"
