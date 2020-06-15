@@ -628,7 +628,8 @@
          ("C-c m f f" . magit-find-file)
          ("C-c m f w" . magit-find-file-other-window)
          ("C-c m r r" . magit-reset)
-         ("C-c m t" . magit-tag)))
+         ("C-c m t" . magit-tag)
+         ("C-c f a" . magit-fetch-all)))
 
 ;;--------------------------------------------------------------------------------------------------
 ;; TRAMP
