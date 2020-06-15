@@ -710,10 +710,10 @@
   :config
 
   (setq company-idle-delay 0.2)
-  (setq company-backends-base '(company-yasnippet
+  (setq company-backends-base '(company-capf
+                                company-yasnippet
                                 company-dabbrev-code
                                 company-dabbrev
-                                company-capf
                                 company-files
                                 company-keywords
                                 company-oddmuse))
@@ -727,9 +727,11 @@
 
   (add-hook 'emacs-lisp-mode-hook (lambda ()
                                     (make-local-variable 'company-backends)
-                                    (setq company-backends
-                                          (append '(company-elisp)
-                                                  company-backends-base))))
+                                    (setq company-backends company-backends-base)))
+
+  (add-hook 'org-mode-hook (lambda ()
+                             (make-local-variable 'company-backends)
+                             (setq company-backends company-backends-base)))
 
   (add-hook 'c-mode-common-hook (lambda ()
                                   (make-local-variable 'company-backends)
