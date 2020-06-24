@@ -16,6 +16,7 @@
 "diffsettings"
 "dumpdata"
 "flush"
+"generate_data"
 "inspectdb"
 "loaddata"
 "makemessages"
