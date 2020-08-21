@@ -12,6 +12,7 @@
 "check"
 "compilemessages"
 "createcachetable"
+"csv_import"
 "dbshell"
 "diffsettings"
 "dumpdata"
