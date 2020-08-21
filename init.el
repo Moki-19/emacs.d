@@ -162,7 +162,7 @@
             #'(lambda ()
                 (set (make-local-variable 'whitespace-line-column)
                      (pcase (projectile-project-name)
-                       ("django-api" 79)
+                       ;; ("django-api" 79)
                        (_ 100)))
                 (whitespace-mode 1))))
 
