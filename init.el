@@ -693,12 +693,18 @@
          ("C-x C-f" . counsel-find-file)
          ("C-x b" . ivy-switch-buffer)
          ("C-x C-r" . counsel-recentf)
-         ("<C-return>" . ivy-immediate-done)
+         ("<C-return>" . ivy-minibuffer-immediate-done)
          ("C-?" . counsel-mark-ring))
   :config
   (ivy-mode 1)
   ;; no regexp by default
-  (setq ivy-initial-inputs-alist nil))
+  (setq ivy-initial-inputs-alist nil)
+
+  (defun ivy-minibuffer-immediate-done ()
+    "Same as ivy-immediate-done but do nothing outside the minibuffer"
+    (interactive)
+    (when (minibufferp (current-buffer)) (ivy-immediate-done)))
+  )
 
 (use-package counsel-projectile
   :ensure t
