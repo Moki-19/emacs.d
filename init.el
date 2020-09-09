@@ -693,7 +693,8 @@
          ("C-x C-f" . counsel-find-file)
          ("C-x b" . ivy-switch-buffer)
          ("C-x C-r" . counsel-recentf)
-         ("<C-return>" . ivy-immediate-done))
+         ("<C-return>" . ivy-immediate-done)
+         ("C-?" . counsel-mark-ring))
   :config
   (ivy-mode 1)
   ;; no regexp by default
