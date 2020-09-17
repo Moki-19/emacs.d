@@ -694,7 +694,10 @@
          ("C-x b" . ivy-switch-buffer)
          ("C-x C-r" . counsel-recentf)
          ("<C-return>" . ivy-minibuffer-immediate-done)
-         ("C-?" . counsel-mark-ring))
+         ("C-?" . counsel-mark-ring)
+         ("C-M-s" . swiper-isearch)
+         ("C-M-r" . swiper-isearch-backward)
+         ("C-S-s" . swiper-isearch-thing-at-point))
   :config
   (ivy-mode 1)
   ;; no regexp by default
@@ -946,17 +949,22 @@ to REPO and COMPILE-APP-COMMAND arguments"
   (setq ag-highlight-search t)
   (setq ag-reuse-buffers t)
   (setq-default ag-ignore-list '("**.min.*"))
+
   (defun ag-app_v2 (string)
     "Find string in app_v2"
     (interactive (list (ag/read-from-minibuffer "Search string")))
     (ag/search string (concat (projectile-project-root) "/..")))
+
   (defun ag-find-in-libs (string)
      "Find string in project libraries"
     (interactive (list (ag/read-from-minibuffer "Search string")))
     (let ((dir (pcase (projectile-project-name)
                  ("web-app" (concat (projectile-project-root) "/node_modules"))
                  ("django-api" python-shell-virtualenv-root)
-                 (_ (projectile-project-root)))))
+                 (_ (if last-ag-find-in-libs-path
+                        last-ag-find-in-libs-path
+                      (projectile-project-root))))))
+      (setq last-ag-find-in-libs-path dir)
       (ag/search string dir))))
 
 ;;--------------------------------------------------------------------------------------------------
