@@ -1041,12 +1041,20 @@ to REPO and COMPILE-APP-COMMAND arguments"
     (interactive)
     (deploy-doqboard-app "web-app" "fab update_front_staging"))
 
-
   (defun deploy-doqboard-back()
     "Deploy Doqboard backend."
     (interactive)
     (deploy-doqboard-app "django-api" "fab update_back_staging"))
-  )
+
+  (defun find-other-file-goto-same-line (&optional flex-matching)
+  "Switch to other file at same line than the current buffer"
+  (interactive "P")
+  (let ((line (line-number-at-pos)))
+    (projectile--find-other-file flex-matching)
+    (when (<= line (count-lines (point-min) (point-max)))
+      (goto-line line))))
+
+  (advice-add 'projectile-find-other-file :override #'find-other-file-goto-same-line))
 
 ;;--------------------------------------------------------------------------------------------------
 ;; MAXIMIZE EMACS ON STARTUP
