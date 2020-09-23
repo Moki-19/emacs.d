@@ -78,6 +78,7 @@
 "syncdata"
 "unreferenced_files"
 "update_permissions"
+"update_calculations"
 "validate_templates"
 "djstripe_clear_expired_idempotency_keys"
 "djstripe_init_customers"

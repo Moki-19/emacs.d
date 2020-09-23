@@ -697,7 +697,8 @@
          ("C-?" . counsel-mark-ring)
          ("C-M-s" . swiper-isearch)
          ("C-M-r" . swiper-isearch-backward)
-         ("C-S-s" . swiper-isearch-thing-at-point))
+         ("C-S-s" . swiper-isearch-thing-at-point)
+         ("<M-S-return>" . show-current-buffer-other-window))
   :config
   (ivy-mode 1)
   ;; no regexp by default
@@ -707,7 +708,10 @@
     "Same as ivy-immediate-done but do nothing outside the minibuffer"
     (interactive)
     (when (minibufferp (current-buffer)) (ivy-immediate-done)))
-  )
+
+  (defun show-current-buffer-other-window ()
+    (interactive)
+    (ivy--switch-buffer-other-window-action (buffer-name))))
 
 (use-package counsel-projectile
   :ensure t
@@ -779,7 +783,8 @@
   :ensure t
   :bind (("C-c s a" . string-inflection-all-cycle)
          ("C-c s c" . string-inflection-camelcase)
-         ("C-c s l" . string-inflection-lower-camelcase)
+         ("C-c s L" . string-inflection-lower-camelcase)
+         ("C-c s l" . string-inflection-lisp)
          ("C-c s u" . string-inflection-underscore)
          ("C-c s U" . string-inflection-upcase)))
 
@@ -828,8 +833,13 @@ to REPO and COMPILE-APP-COMMAND arguments"
 ;;--------------------------------------------------------------------------------------------------
 (use-package realgud
   :ensure t
-  :bind ("C-c b t" . realgud-track-mode)
-  :commands (realgud:trepan3k realgud-track-mode))
+  :bind (("C-c b t" . run-realgud-from-shell)
+         ("C-c b a" . realgud:attach-cmd-buffer))
+  :commands (realgud-track-mode realgud-cmdbuf-toggle-in-debugger? realgud:attach-cmd-buffer)
+  :config
+  (defun run-realgud-from-shell()
+    (realgud-track-mode)
+    (realgud-cmdbuf-toggle-in-debugger?)))
 
 ;;--------------------------------------------------------------------------------------------------
 ;; INDIUM
@@ -974,6 +984,7 @@ to REPO and COMPILE-APP-COMMAND arguments"
   :ensure t
   :bind (("C-c p" . projectile-command-map)
          ("C-c p x p" . run-project)
+         ("C-c p x b" . run-project-in-debug)
          ("C-c p x d f" . deploy-doqboard-front)
          ("C-c p x d b" . deploy-doqboard-back))
   :init
@@ -1028,6 +1039,16 @@ to REPO and COMPILE-APP-COMMAND arguments"
       (if cmd (projectile-with-default-dir (projectile-ensure-project (projectile-project-root))
                 (async-shell-command cmd (concat (projectile-project-name) " running")))
         (message "No running command set for %s project" (projectile-project-name)))))
+
+
+  (defun run-project-in-debug()
+    "Run a project in debug mode"
+    (interactive)
+    (pcase (projectile-project-name)
+      ("django-api" (projectile-with-default-dir
+                        (projectile-ensure-project (projectile-project-root))
+                      (realgud:pdb "python -m pdb manage.py runserver --noreload")))
+      (_ (message "No debugging command set for %s project" (projectile-project-name)))))
 
   (defun deploy-doqboard-app(end cmd)
     (let ((project "django-api"))
