@@ -228,8 +228,10 @@
 ;;--------------------------------------------------------------------------------------------------
 (use-package elpy
   :ensure t
-  :bind ((:map python-mode-map ("C-c ! f" . elpy-autopep8-fix-code))
-         (:map compilation-mode-map ("C-c C-p" . compile-to-inferior-python)))
+  :bind ((:map compilation-mode-map ("C-c C-p" . compile-to-inferior-python))
+         (:map python-mode-map ("C-c ! f" . elpy-autopep8-fix-code))
+         (:map python-mode-map ("C-c <kp-subtract>" . elpy-nav-indent-shift-left))
+         (:map python-mode-map ("C-c <kp-add>" . elpy-nav-indent-shift-right)))
   :init (elpy-enable)
   :config
   (setq elpy-test-runner 'elpy-test-django-runner)
