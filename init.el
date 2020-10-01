@@ -988,7 +988,8 @@ to REPO and COMPILE-APP-COMMAND arguments"
          ("C-c p x p" . run-project)
          ("C-c p x b" . run-project-in-debug)
          ("C-c p x d f" . deploy-doqboard-front)
-         ("C-c p x d b" . deploy-doqboard-back))
+         ("C-c p x d b" . deploy-doqboard-back)
+         ("C-c p x i" . start-django-shell))
   :init
   :config
   (projectile-global-mode)
@@ -1077,7 +1078,20 @@ to REPO and COMPILE-APP-COMMAND arguments"
     (when (<= line (count-lines (point-min) (point-max)))
       (goto-line line))))
 
-  (advice-add 'projectile-find-other-file :override #'find-other-file-goto-same-line))
+  (advice-add 'projectile-find-other-file :override #'find-other-file-goto-same-line)
+
+  (defun start-django-shell ()
+    "Start a django shell"
+    (interactive)
+    (let* ((django-shell-name "Django shell")
+          (django-shell-buffer (get-buffer django-shell-name)))
+      (if django-shell-buffer
+          (pop-to-buffer django-shell-buffer nil t)
+        (if (string= (projectile-project-name) "django-api")
+            (progn
+              (async-shell-command (concat (projectile-project-root) "manage.py shell_plus") django-shell-name)
+              (pop-to-buffer django-shell-name))
+          (message "Please switch to the django-api project first."))))))
 
 ;;--------------------------------------------------------------------------------------------------
 ;; MAXIMIZE EMACS ON STARTUP
