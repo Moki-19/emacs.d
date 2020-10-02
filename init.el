@@ -989,7 +989,9 @@ to REPO and COMPILE-APP-COMMAND arguments"
          ("C-c p x b" . run-project-in-debug)
          ("C-c p x d f" . deploy-doqboard-front)
          ("C-c p x d b" . deploy-doqboard-back)
-         ("C-c p x i" . start-django-shell))
+         ("C-c p x i" . start-django-shell)
+         ("C-c p x c" . save-pg-database-to-file)
+         ("C-c p x r" . restore-django-pg-database-from-file))
   :init
   :config
   (projectile-global-mode)
@@ -1091,7 +1093,47 @@ to REPO and COMPILE-APP-COMMAND arguments"
             (progn
               (async-shell-command (concat (projectile-project-root) "manage.py shell_plus") django-shell-name)
               (pop-to-buffer django-shell-name))
-          (message "Please switch to the django-api project first."))))))
+          (message "Please switch to the django-api project first.")))))
+
+;; From https://stackoverflow.com/questions/13901955/how-to-avoid-pop-up-of-async-shell-command-buffer-in-emacs
+(defun async-shell-command-no-window (command)
+  "Run a async COMMAND without displaying a shell window."
+  (let ((display-buffer-alist
+         (list
+          (cons
+           "\\*Async Shell Command\\*.*"
+           (cons #'display-buffer-no-window nil)))))
+    (async-shell-command command)))
+
+(defun save-pg-database-to-file (bk-file &optional db-name)
+  "Save the DB-NAME postgresql database in BK-FILE."
+  (interactive "FBackup file path: \nsDatabase name (doqboard): ")
+  (let ((db-name (if (and db-name (not (string-empty-p db-name))) db-name  "doqboard")))
+    (when (or (not (file-exists-p bk-file))
+              (yes-or-no-p (format "Please confirm that you want to overwrite %s file ?" bk-file)))
+      (async-shell-command-no-window
+       (format "pg_dump -U llemaitre -Fc -b -f %s %s" bk-file db-name)))))
+
+(defun restore-django-pg-database-from-file (bk-file &optional db-name)
+  "Restore the DB-NAME postgresql database from BK-FILE."
+  (interactive "fBackup file path: \nsDatabase name (doqboard): ")
+  (let* ((user "llemaitre")
+         (db-name (if (and db-name (not (string-empty-p db-name))) db-name  "doqboard"))
+         (drop-schema-cmd (format
+                           "psql -U %s %s -c \"DROP SCHEMA IF EXISTS public CASCADE;\""
+                           user db-name))
+         (create-schema-cmd (format
+                             "psql -U %s %s -c \"CREATE SCHEMA public AUTHORIZATION %s;\""
+                             user db-name "doqboard"))
+         (pg-restore-cmd (format
+                         "pg_restore -U %s -d %s -n public --if-exists -c -e -j 5 \"%s\""
+                         user db-name bk-file))
+         (migrate-cmd (format "%smanage.py migrate" (projectile-project-root)))
+         (cmd (concat drop-schema-cmd " && " create-schema-cmd " && " pg-restore-cmd " && " migrate-cmd)))
+
+    (if (string= (projectile-project-name) "django-api")
+        (async-shell-command-no-window cmd)
+      (message "You must be in django-api project first.")))))
 
 ;;--------------------------------------------------------------------------------------------------
 ;; MAXIMIZE EMACS ON STARTUP
