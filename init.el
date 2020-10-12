@@ -1210,6 +1210,13 @@ to REPO and COMPILE-APP-COMMAND arguments"
 (setq sql-database "doqboard")
 
 ;;--------------------------------------------------------------------------------------------------
+;; UNFILL
+;;--------------------------------------------------------------------------------------------------
+(use-package unfill
+  :ensure t
+  :bind (("C-c u r" . unfill-region)))
+
+;;--------------------------------------------------------------------------------------------------
 ;; GOOGLE TRANSLATE
 ;;--------------------------------------------------------------------------------------------------
 (use-package google-translate
@@ -1354,7 +1361,7 @@ to REPO and COMPILE-APP-COMMAND arguments"
  '(org-agenda-files nil)
  '(package-selected-packages
    (quote
-    (sqlformat company-auctex auctex telephone-line powerline smart-mode-line ws-butler kurecolor flycheck-css-colorguard rainbow-mode js2-refactor js2-mode org po-mode realgud-ipdb markdown-mode jest json-navigator realgud multi-term restclient indium dashboard rjsx-mode build-helper elpy diminish ibuffer-projectile ivy-yasnippet yasnippet highlight-indentation birds-of-paradise-plus-theme php-mode counsel-gtags counsel-projectile counsel all-the-icons-ivy google-translate web-mode powershell ggtags init-open-recentf treemacs-projectile treemacs magit tide string-inflection flycheck all-the-icons-dired use-package company-web add-node-modules-path geben yasnippet-snippets projectile yascroll auto-complete chess yaml-mode buffer-move zenburn-theme dracula-theme company-tern json-mode ag s exec-path-from-shell)))
+    (unfill sqlformat company-auctex auctex telephone-line powerline smart-mode-line ws-butler kurecolor flycheck-css-colorguard rainbow-mode js2-refactor js2-mode org po-mode realgud-ipdb markdown-mode jest json-navigator realgud multi-term restclient indium dashboard rjsx-mode build-helper elpy diminish ibuffer-projectile ivy-yasnippet yasnippet highlight-indentation birds-of-paradise-plus-theme php-mode counsel-gtags counsel-projectile counsel all-the-icons-ivy google-translate web-mode powershell ggtags init-open-recentf treemacs-projectile treemacs magit tide string-inflection flycheck all-the-icons-dired use-package company-web add-node-modules-path geben yasnippet-snippets projectile yascroll auto-complete chess yaml-mode buffer-move zenburn-theme dracula-theme company-tern json-mode ag s exec-path-from-shell)))
  '(paradox-github-token t)
  '(safe-local-variable-values
    (quote
