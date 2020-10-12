@@ -1170,6 +1170,7 @@ to REPO and COMPILE-APP-COMMAND arguments"
 (global-set-key (kbd "<f14>") 'kmacro-end-and-call-macro)
 (global-set-key (kbd "C-c *") 'send-invisible)
 (global-set-key (kbd "C-c q l") 'sql-postgres)
+(global-set-key (kbd "C-c q m") 'sql-mode)
 
 ;;--------------------------------------------------------------------------------------------------
 ;; XML SHORTCUTS
@@ -1196,6 +1197,14 @@ to REPO and COMPILE-APP-COMMAND arguments"
 ;;--------------------------------------------------------------------------------------------------
 ;; SQL
 ;;--------------------------------------------------------------------------------------------------
+(use-package sqlformat
+  :ensure t
+  :bind (("C-c q f r" . sqlformat-region)
+         ("C-c q f b" . sqlformat-buffer))
+  :config
+  (setq sqlformat-command 'pgformatter)
+  (setq sqlformat-args '("-s2" "-g")))
+
 (add-hook 'sql-interactive-mode-hook '(lambda () (toggle-truncate-lines 1)))
 (setq sql-user "doqboard")
 (setq sql-database "doqboard")
@@ -1345,7 +1354,7 @@ to REPO and COMPILE-APP-COMMAND arguments"
  '(org-agenda-files nil)
  '(package-selected-packages
    (quote
-    (company-auctex auctex telephone-line powerline smart-mode-line ws-butler kurecolor flycheck-css-colorguard rainbow-mode js2-refactor js2-mode org po-mode realgud-ipdb markdown-mode jest json-navigator realgud multi-term restclient indium dashboard rjsx-mode build-helper elpy diminish ibuffer-projectile ivy-yasnippet yasnippet highlight-indentation birds-of-paradise-plus-theme php-mode counsel-gtags counsel-projectile counsel all-the-icons-ivy google-translate web-mode powershell ggtags init-open-recentf treemacs-projectile treemacs magit tide string-inflection flycheck all-the-icons-dired use-package company-web add-node-modules-path geben yasnippet-snippets projectile yascroll auto-complete chess yaml-mode buffer-move zenburn-theme dracula-theme company-tern json-mode ag s exec-path-from-shell)))
+    (sqlformat company-auctex auctex telephone-line powerline smart-mode-line ws-butler kurecolor flycheck-css-colorguard rainbow-mode js2-refactor js2-mode org po-mode realgud-ipdb markdown-mode jest json-navigator realgud multi-term restclient indium dashboard rjsx-mode build-helper elpy diminish ibuffer-projectile ivy-yasnippet yasnippet highlight-indentation birds-of-paradise-plus-theme php-mode counsel-gtags counsel-projectile counsel all-the-icons-ivy google-translate web-mode powershell ggtags init-open-recentf treemacs-projectile treemacs magit tide string-inflection flycheck all-the-icons-dired use-package company-web add-node-modules-path geben yasnippet-snippets projectile yascroll auto-complete chess yaml-mode buffer-move zenburn-theme dracula-theme company-tern json-mode ag s exec-path-from-shell)))
  '(paradox-github-token t)
  '(safe-local-variable-values
    (quote
