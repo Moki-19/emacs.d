@@ -1128,8 +1128,8 @@ to REPO and COMPILE-APP-COMMAND arguments"
          (pg-restore-cmd (format
                          "pg_restore -U %s -d %s -n public --if-exists -c -e -j 5 \"%s\""
                          user db-name bk-file))
-         (migrate-cmd (format "%smanage.py migrate" (projectile-project-root)))
-         (cmd (concat drop-schema-cmd " && " create-schema-cmd " && " pg-restore-cmd " && " migrate-cmd)))
+         ;; (migrate-cmd (format "%smanage.py migrate" (projectile-project-root)))
+         (cmd (concat drop-schema-cmd " && " create-schema-cmd " && " pg-restore-cmd)))
 
     (if (string= (projectile-project-name) "django-api")
         (async-shell-command-no-window cmd)
@@ -1209,12 +1209,33 @@ to REPO and COMPILE-APP-COMMAND arguments"
 (setq sql-user "doqboard")
 (setq sql-database "doqboard")
 
+;; From https://www.emacswiki.org/emacs/SqlMode
+(add-hook 'sql-login-hook 'my-sql-login-hook)
+(defun my-sql-login-hook ()
+  "Custom SQL log-in behaviours.  See 'sql-login-hook'."
+  ;; n.b. If you are looking for a response and need to parse the
+  ;; response, use `sql-redirect-value' instead of `comint-send-string'.
+  (when (eq sql-product 'postgres)
+    (let ((proc (get-buffer-process (current-buffer))))
+      ;; Output each query before executing it. (n.b. this also avoids
+      ;; the psql prompt breaking the alignment of query results.)
+      (comint-send-string proc "\\set ECHO queries\n"))))
+
 ;;--------------------------------------------------------------------------------------------------
 ;; UNFILL
 ;;--------------------------------------------------------------------------------------------------
 (use-package unfill
   :ensure t
   :bind (("C-c u r" . unfill-region)))
+
+;;--------------------------------------------------------------------------------------------------
+;; HIDESHOW
+;;--------------------------------------------------------------------------------------------------
+(use-package hideshow
+  :hook ((prog-mode . hs-minor-mode))
+  :bind (("C-<" . hs-toggle-hiding)
+         ("C->" . hs-show-all)
+         ("C-M-<" . hs-hide-all)))
 
 ;;--------------------------------------------------------------------------------------------------
 ;; GOOGLE TRANSLATE
