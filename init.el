@@ -10,6 +10,7 @@
 ;; Internal
 (defvar font-height-medium-screen)
 (defvar font-height-large-screen)
+(defvar default-max-line-length 100)
 
 ;; External
 (defvar mac-option-key-is-meta)
@@ -163,8 +164,10 @@
                 (set (make-local-variable 'whitespace-line-column)
                      (pcase (projectile-project-name)
                        ;; ("django-api" 79)
-                       (_ 100)))
-                (whitespace-mode 1))))
+                       (_ default-max-line-length)))
+                (whitespace-mode 1)))
+  :config
+  (setq-default fill-column default-max-line-length))
 
 ;;--------------------------------------------------------------------------------------------------
 ;; WS-BUTLER
@@ -1279,8 +1282,6 @@ to REPO and COMPILE-APP-COMMAND arguments"
   (defun org-agenda-show-custom (&optional arg)
     (interactive "P")
     (org-agenda arg "c"))
-
-  (add-hook 'org-mode-hook (lambda () (setq fill-column 100)))
 
   ;; Unbind conflicting keys
   (define-key org-mode-map (kbd "<M-left>") nil)
