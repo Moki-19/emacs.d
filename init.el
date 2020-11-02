@@ -1167,6 +1167,7 @@ to REPO and COMPILE-APP-COMMAND arguments"
 (global-set-key (kbd "C-c b r") 'revert-buffer)
 (global-set-key (kbd "C-c o i") 'open-emacs-init-file)
 (global-set-key (kbd "C-c b b") 'browse-url-of-buffer)
+(global-set-key (kbd "C-c b u") 'browse-url)
 (global-set-key (kbd "C-x SPC") 'rectangle-mark-mode)
 (global-set-key (kbd "C-c b d") 'diff-buffer-with-file)
 (global-set-key (kbd "<f13>") 'kmacro-start-macro)
