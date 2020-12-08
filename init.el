@@ -317,6 +317,8 @@
 ;;--------------------------------------------------------------------------------------------------
 ;; JS2-MODE
 ;;--------------------------------------------------------------------------------------------------
+;; RJSX-MODE and JS2-MODE are not required starting from Emacs 27, but they seem to do a better job
+;; than the embedded support (commenting JSX, ...), so keeping it for now.
 (use-package js2-mode
   :ensure t
   :bind (:map js2-mode-map (("C-c ! f" . eslint-fix-file-and-revert)
@@ -838,13 +840,10 @@ to REPO and COMPILE-APP-COMMAND arguments"
 ;;--------------------------------------------------------------------------------------------------
 (use-package realgud
   :ensure t
-  :bind (("C-c b t" . run-realgud-from-shell)
-         ("C-c b a" . realgud:attach-cmd-buffer))
-  :commands (realgud-track-mode realgud-cmdbuf-toggle-in-debugger? realgud:attach-cmd-buffer)
-  :config
-  (defun run-realgud-from-shell()
-    (realgud-track-mode)
-    (realgud-cmdbuf-toggle-in-debugger?)))
+  :bind (("C-c b t" . realgud-track-mode)
+         ("C-c b a" . realgud:attach-cmd-buffer)
+         ("C-c b d" . realgud-cmdbuf-toggle-in-debugger?))
+  :commands (realgud-track-mode realgud-cmdbuf-toggle-in-debugger? realgud:attach-cmd-buffer))
 
 ;;--------------------------------------------------------------------------------------------------
 ;; INDIUM
