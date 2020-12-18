@@ -513,17 +513,18 @@
 ;;--------------------------------------------------------------------------------------------------
 (use-package tide
   :ensure t
+  :after (js2-mode company flycheck)
   :bind ((:map js2-mode-map
                ("C-c j" . tide-jsdoc-template)))
   :config
   (setq company-tooltip-align-annotations t)
-  (add-hook 'js2-mode-hook
-            (lambda ()
-              (tide-setup)
-              (eldoc-mode +1)
-              (tide-hl-identifier-mode +1)
-              (company-mode +1)
-              (local-set-key (kbd "M-?") 'tide-references))))
+  :hook ((js2-mode . (lambda ()
+                   (tide-setup)
+                   (eldoc-mode)
+                   (tide-hl-identifier-mode)
+                   (company-mode)
+                   (local-set-key (kbd "M-?") 'tide-references)))))
+
 
 ;;--------------------------------------------------------------------------------------------------
 ;; JEST
