@@ -120,9 +120,15 @@
 ;;--------------------------------------------------------------------------------------------------
 ;; FONT
 ;;--------------------------------------------------------------------------------------------------
-(set-face-attribute 'default nil :height (if (<= (x-display-pixel-width) 1280)
-					   font-height-medium-screen
-					   font-height-large-screen))
+;; (set-face-attribute 'default nil :height (if (<= (x-display-pixel-width) 1280)
+;;                                              font-height-medium-screen
+;;                                            font-height-large-screen))
+;; FIXME: find which package override font size just after initialization (putting previous line
+;; at the end of this file does not work). This issue occurs since a massive package update.
+(add-hook 'emacs-startup-hook (lambda () (set-face-attribute 'default nil :height
+                                                             (if (<= (x-display-pixel-width) 1280)
+                                                                 font-height-medium-screen
+                                                               font-height-large-screen))))
 
 ;;--------------------------------------------------------------------------------------------------
 ;; Disable SOUND
@@ -1378,17 +1384,14 @@ to REPO and COMPILE-APP-COMMAND arguments"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   (quote
-    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "b3775ba758e7d31f3bb849e7c9e48ff60929a792961a2d536edec8f68c671ca5" "3cc2385c39257fed66238921602d8104d8fd6266ad88a006d0a4325336f5ee02" default)))
+   '("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "b3775ba758e7d31f3bb849e7c9e48ff60929a792961a2d536edec8f68c671ca5" "3cc2385c39257fed66238921602d8104d8fd6266ad88a006d0a4325336f5ee02" default))
  '(gdb-create-source-file-list nil)
  '(org-agenda-files nil)
  '(package-selected-packages
-   (quote
-    (unfill sqlformat company-auctex auctex telephone-line powerline smart-mode-line ws-butler kurecolor flycheck-css-colorguard rainbow-mode js2-refactor js2-mode org po-mode realgud-ipdb markdown-mode jest json-navigator realgud multi-term restclient indium dashboard rjsx-mode build-helper elpy diminish ibuffer-projectile ivy-yasnippet yasnippet highlight-indentation birds-of-paradise-plus-theme php-mode counsel-gtags counsel-projectile counsel all-the-icons-ivy google-translate web-mode powershell ggtags init-open-recentf treemacs-projectile treemacs magit tide string-inflection flycheck all-the-icons-dired use-package company-web add-node-modules-path geben yasnippet-snippets projectile yascroll auto-complete chess yaml-mode buffer-move zenburn-theme dracula-theme company-tern json-mode ag s exec-path-from-shell)))
+   '(unfill sqlformat company-auctex auctex telephone-line powerline smart-mode-line ws-butler kurecolor flycheck-css-colorguard rainbow-mode js2-refactor js2-mode org po-mode realgud-ipdb markdown-mode jest json-navigator realgud multi-term restclient indium dashboard rjsx-mode build-helper elpy diminish ibuffer-projectile ivy-yasnippet yasnippet highlight-indentation birds-of-paradise-plus-theme php-mode counsel-gtags counsel-projectile counsel all-the-icons-ivy google-translate web-mode powershell ggtags init-open-recentf treemacs-projectile treemacs magit tide string-inflection flycheck all-the-icons-dired use-package company-web add-node-modules-path geben yasnippet-snippets projectile yascroll auto-complete chess yaml-mode buffer-move zenburn-theme dracula-theme company-tern json-mode ag s exec-path-from-shell))
  '(paradox-github-token t)
  '(safe-local-variable-values
-   (quote
-    ((eval pyvenv-workon "django-api-env")
+   '((eval pyvenv-workon "django-api-env")
      (mocha-reporter . "spec")
      (mocha-project-test-directory . "test")
      (mocha-options . "--recursive --exit")
@@ -1396,37 +1399,30 @@ to REPO and COMPILE-APP-COMMAND arguments"
      (buffer-file-coding-system . utf-8-unix)
      (eval setq-local projectile-project-compilation-cmd
            (if
-               (eq system-type
-                   (quote windows-nt))
+               (eq system-type 'windows-nt)
                "mvnw.cmd" "mvnw"))
      (eval setq-local projectile-project-compilation-cmd "mvnw.cmd")
      (eval setq projectile-project-compilation-cmd "mvnw.cmd")
-     (\`
-      (projectile-project-compilation-cmd \,
+     `(projectile-project-compilation-cmd \,
                                           (if
-                                              (eq system-type
-                                                  (quote windows-nt))
-                                              "mvnw.cmd" "msvw")))
+                                              (eq system-type 'windows-nt)
+                                              "mvnw.cmd" "msvw"))
      (projectile-project-compilation-cmd \,
                                          (if
-                                             (eq system-type
-                                                 (quote windows-nt))
+                                             (eq system-type 'windows-nt)
                                              "mvnw.cmd" "msvw"))
      (projectile-project-compilation-cmd cons
                                          (if
-                                             (eq system-type
-                                                 (quote windows-nt))
+                                             (eq system-type 'windows-nt)
                                              "mvnw.cmd" "msvw"))
      (projectile-project-compilation-cmd \`
                                          (if
-                                             (eq system-type
-                                                 (quote windows-nt))
+                                             (eq system-type 'windows-nt)
                                              "mvnw.cmd" "msvw"))
      (projectile-project-compilation-cmd if
-                                         (eq system-type
-                                             (quote windows-nt))
+                                         (eq system-type 'windows-nt)
                                          "mvnw.cmd" "msvw")
-     (projectile-project-compilation-cmd . "mvnw.cmd"))))
+     (projectile-project-compilation-cmd . "mvnw.cmd")))
  '(show-paren-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
