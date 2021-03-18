@@ -1049,9 +1049,14 @@ to REPO and COMPILE-APP-COMMAND arguments"
     (let ((cmd (pcase (projectile-project-name)
                  ("web-app" "yarn start")
                  ("django-api" "workon doqboard && ./manage.py runserver")
-                 (_ nil))))
-      (if cmd (projectile-with-default-dir (projectile-ensure-project (projectile-project-root))
-                (async-shell-command cmd (concat (projectile-project-name) " running")))
+                 (_ nil)))
+          (cmd-buffer-name (concat (projectile-project-name) " running")))
+      (if cmd
+          (progn
+            (let ((cmd-buffer (get-buffer cmd-buffer-name)))
+              (if cmd-buffer (pop-to-buffer cmd-buffer nil t)
+                (projectile-with-default-dir (projectile-ensure-project (projectile-project-root))
+                  (async-shell-command cmd cmd-buffer-name)))))
         (message "No running command set for %s project" (projectile-project-name)))))
 
 
