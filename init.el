@@ -418,7 +418,15 @@
                        (+ js-indent-level js-expr-indent-offset))
                       (t 0))))
 
-            (advice-add 'js--proper-indentation :override 'js--proper-indentation-custom))
+            (advice-add 'js--proper-indentation :override 'js--proper-indentation-custom)
+
+            ;; https://github.com/felipeochoa/rjsx-mode/issues/112
+            (defun +rjsx-electric-gt-fragment-a (n)
+              (if (or (/= n 1) (not (and (eq (char-before) ?<) (eq (char-after) ?/)))) 't
+                (insert ?> ?<)
+                (backward-char)))
+
+            (advice-add #'rjsx-electric-gt :before-while #'+rjsx-electric-gt-fragment-a))
 
   (defun eslint-fix-file ()
     (interactive)
