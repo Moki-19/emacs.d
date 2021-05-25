@@ -1193,7 +1193,7 @@ to REPO and COMPILE-APP-COMMAND arguments"
 (global-set-key (kbd "C-c b d") 'diff-buffer-with-file)
 (global-set-key (kbd "<f13>") 'kmacro-start-macro)
 (global-set-key (kbd "<f14>") 'kmacro-end-and-call-macro)
-(global-set-key (kbd "C-c *") 'send-invisible)
+(global-set-key (kbd "C-c *") 'comint-send-invisible)
 (global-set-key (kbd "C-c q l") 'sql-postgres)
 (global-set-key (kbd "C-c q m") 'sql-mode)
 
