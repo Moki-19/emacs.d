@@ -1063,8 +1063,12 @@ to REPO and COMPILE-APP-COMMAND arguments"
           (cmd-buffer-name (concat (projectile-project-name) " running")))
       (if cmd
           (progn
-            (let ((cmd-buffer (get-buffer cmd-buffer-name)))
-              (if cmd-buffer (pop-to-buffer cmd-buffer nil t)
+            (let* ((cmd-buffer (get-buffer cmd-buffer-name))
+                   (cmd-buffer-already-displayed (equal cmd-buffer (current-buffer)))
+                   (kill-buffer-query-functions nil))
+              (if (and cmd-buffer (not cmd-buffer-already-displayed))
+                  (pop-to-buffer cmd-buffer nil t)
+                (when cmd-buffer (kill-buffer cmd-buffer))
                 (projectile-with-default-dir (projectile-ensure-project (projectile-project-root))
                   (async-shell-command cmd cmd-buffer-name)))))
         (message "No running command set for %s project" (projectile-project-name)))))
