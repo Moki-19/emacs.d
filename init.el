@@ -74,7 +74,7 @@
 ;; MAC conf
 ;;--------------------------------------------------------------------------------------------------
 (when (eq system-type 'darwin)
-  (load "osx_gud.el")
+  ;; (load "osx_gud.el")
   (setq exec-path (append '("/usr/local/bin")
                           exec-path))
   (defvar app-rebuild "~/Travail/Scripts/rebuild_postop")
@@ -1356,6 +1356,13 @@ to REPO and COMPILE-APP-COMMAND arguments"
   (telephone-line-mode 1))
 
 ;;--------------------------------------------------------------------------------------------------
+;; CRUX
+;;--------------------------------------------------------------------------------------------------
+(use-package crux
+  :ensure t
+  :bind (("C-c c r" . crux-rename-file-and-buffer)))
+
+;;--------------------------------------------------------------------------------------------------
 ;; QUICK EMACS CONF FILE OPENNING
 ;;--------------------------------------------------------------------------------------------------
 (defun open-emacs-init-file ()
@@ -1448,6 +1455,6 @@ to REPO and COMPILE-APP-COMMAND arguments"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:background nil)))))
 
 ;;; init.el ends here
