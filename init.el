@@ -887,7 +887,6 @@ to REPO and COMPILE-APP-COMMAND arguments"
 ;; WINDMOVE & FRAMEMOVE
 ;;--------------------------------------------------------------------------------------------------
 (require 'framemove)
-(require 'cl)
 (windmove-default-keybindings 'meta)
 (setq framemove-hook-into-windmove t)
 
